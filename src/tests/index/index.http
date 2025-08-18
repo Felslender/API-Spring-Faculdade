@@ -6,5 +6,5 @@ GET {{url}}
 POST {{url}}
 Content-Type: text/plain
 
-Abacate
+Maracuja
 
