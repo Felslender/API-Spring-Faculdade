@@ -1,9 +1,28 @@
 @url = https://friendly-halibut-px9prpv9qvrf7jv9-8080.app.github.dev/tarefas
 
+
+GET {{url}}
+
+###
+GET {{url}}/4
+
+###
 POST {{url}}
 Content-Type: application/json
 
 {
-    "id": 1,
+    "id": 2,
     "descricao": "Teste"
 }
+
+###
+PUT {{url}}/1
+Content-Type: application/json
+
+{
+    "descricao": "Teste alterado"
+}
+
+
+###
+DELETE {{url}}/2
