@@ -52,12 +52,14 @@ public class AlunoController {
         Optional<Aluno> resultado = alunoRepo.findById(id);
 
         if(resultado.isPresent()){
-            resultado.get().setDescricao(novosDados.getDescricao());
+            resultado.get().setNome(novosDados.getNome());
+            resultado.get().setIdade(novosDados.getIdade());
             return alunoRepo.save(resultado.get());
         }
 
         return new Aluno();
     }
+
 
     @DeleteMapping("/{id}")
     public void remove(@PathVariable long id){
