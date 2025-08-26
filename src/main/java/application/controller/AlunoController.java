@@ -16,7 +16,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import application.Repository.AlunoRepository;
 import application.model.Aluno;
-import application.model.Tarefa;
+import application.record.alunoDTO;
+import application.service.AlunoService;
 
 @RestController
 @RequestMapping("/alunos")
@@ -24,18 +25,22 @@ public class AlunoController {
     @Autowired
     private AlunoRepository alunoRepo;
 
+    @Autowired
+    private AlunoService alunoService;
+
     @PostMapping
-    public Aluno insert(@RequestBody Aluno novoAluno){
-        return alunoRepo.save(novoAluno);
+    public AlunoDTO insert(@RequestBody AlunoDTO novoAluno){
+
+        return alunoService.insert(novoAluno);
     }
 
     @GetMapping
-    public Iterable<Aluno> getAll(){
-        return alunoRepo.findAll();
+    public Iterable<AlunoDTO> getAll(){
+        return alunoService.getAll();
     }
 
     @GetMapping("/{id}")
-    public Aluno getOne(@PathVariable long id){
+    public AlunoDTO getOne(@PathVariable long id){
         Optional<Aluno> resultado = alunoRepo.findById(id);
 
         if(resultado.isEmpty()){
@@ -44,20 +49,20 @@ public class AlunoController {
             );
         }
 
-        return resultado.get();
+        return new AlunoDTO(resultado.get());
     }
 
     @PutMapping("/{id}")
-    public Aluno update(@PathVariable long id, @RequestBody Aluno novosDados){
+    public AlunoDTO update(@PathVariable long id, @RequestBody AlunoDTO dadosAluno){
         Optional<Aluno> resultado = alunoRepo.findById(id);
 
         if(resultado.isPresent()){
-            resultado.get().setNome(novosDados.getNome());
-            resultado.get().setIdade(novosDados.getIdade());
+            resultado.get().setNome(dadosAluno.getNome());
+            resultado.get().setIdade(dadosAluno.getIdade());
             return alunoRepo.save(resultado.get());
         }
 
-        return new Aluno();
+        return new alunoDTO(alunoRepo.save(resultado.get()));
     }
 
 
